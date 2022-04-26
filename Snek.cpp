@@ -7,6 +7,7 @@ Snek::Snek(unsigned int baseSize, sf::Vector2u headPosition)
 	for (size_t i = 1; i < baseSize; i++) {
 		this->addRingAtEnd();
 	}
+	this->direction = Direction::UP;
 }
 
 void Snek::addRingAtEnd()
@@ -18,25 +19,38 @@ void Snek::addRingAtEnd()
 	updateVertices();
 }
 
-void Snek::moveHeadInDirection(Direction direction)
+void Snek::deleteRingAtEnd()
+{
+	Ring* last = this->head;
+	Ring* previous = nullptr;
+	while (last->next != nullptr) {
+		previous = last;
+		last = last->next;
+	}
+	previous->next = nullptr;
+	delete last;
+	this->size--;
+	updateVertices();
+}
+
+void Snek::moveSnek()
 {
 	sf::Vector2u previousPosition = this->head->pos;
 
+	this->direction = this->nextDirection;
+
 	// Compute new head position
-	if (direction == Direction::UP) {
+	if (this->direction == Direction::UP) {
 		int y = this->head->pos.y - 1;
 		if (y < 0) {
 			y += constants::GRID_HEIGHT;
 		}
 		this->head->pos.y = y;
-	}
-	if (direction == Direction::DOWN) {
+	} else if (this->direction == Direction::DOWN) {
 		this->head->pos.y = (this->head->pos.y + 1) % constants::GRID_HEIGHT;
-	}
-	if (direction == Direction::RIGHT) {
+	} else if (this->direction == Direction::RIGHT) {
 		this->head->pos.x = (this->head->pos.x + 1) % constants::GRID_WIDTH;
-	}
-	if (direction == Direction::LEFT) {
+	} else if (this->direction == Direction::LEFT) {
 		int x = this->head->pos.x - 1;
 		if (x < 0) {
 			x += constants::GRID_WIDTH;
@@ -52,6 +66,8 @@ void Snek::moveHeadInDirection(Direction direction)
 		previousPosition = currentPosition;
 		head = head->next;
 	}
+
+	this->nextDirection = this->direction;
 	this->updateVertices();
 }
 
@@ -83,6 +99,11 @@ bool Snek::isInSnek(sf::Vector2u position)
 		head = head->next;
 	}
 	return false;
+}
+
+void Snek::setDirection(Direction direction)
+{
+	this->nextDirection = direction;
 }
 
 sf::Vector2u Snek::getSnekHeadPosition()
@@ -121,7 +142,7 @@ void Snek::updateVertices()
 	count++;
 
 	while (head != nullptr) {
-		sf::Vertex* quad = &vertices[count * 4];
+		quad = &vertices[count * 4];
 
 		quad[0].position = sf::Vector2f(head->pos.x * constants::BLOCK_SIZE, head->pos.y * constants::BLOCK_SIZE);
 		quad[1].position = sf::Vector2f((head->pos.x + 1) * constants::BLOCK_SIZE, head->pos.y * constants::BLOCK_SIZE);

@@ -7,10 +7,14 @@ class Snek : public sf::Drawable, public sf::Transformable
 {
 public:
 	Snek(unsigned int baseSize, sf::Vector2u headPosition);
-	void addRingAtEnd();
-	void moveHeadInDirection(Direction direction);
+    void addRingAtEnd();
+    void deleteRingAtEnd();
+	void moveSnek();
     bool headCollides();
     bool isInSnek(sf::Vector2u position);
+    void setDirection(Direction direction);
+    Direction getDirection() { return this->direction; }
+    int getSize() { return this->size; }
 
     sf::Vector2u getSnekHeadPosition();
 private:
@@ -31,5 +35,7 @@ private:
 	unsigned int size;
 	Ring* head;
 	sf::VertexArray vertices;
+    Direction direction;
+    Direction nextDirection;
 };
 

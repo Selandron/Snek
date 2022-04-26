@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Snek">
       <UniqueIdentifier>{d10e4181-aded-41b6-b459-785ab22a1f38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Bonus">
+      <UniqueIdentifier>{0f893467-46de-444b-a7b5-0f5b3bd56a28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bonus">
+      <UniqueIdentifier>{be4cd9ec-5e0e-468e-9163-746614c926f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -27,8 +33,14 @@
     <ClInclude Include="Snek.h">
       <Filter>Header Files\Snek</Filter>
     </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Header Files\Bonus</Filter>
+    </ClInclude>
     <ClInclude Include="Fruit.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="Shrinker.h">
+      <Filter>Header Files\Bonus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -44,8 +56,14 @@
     <ClCompile Include="Direction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Source Files\Bonus</Filter>
+    </ClCompile>
     <ClCompile Include="Fruit.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="Shrinker.cpp">
+      <Filter>Source Files\Bonus</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
